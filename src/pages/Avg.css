@@ -1,0 +1,32 @@
+.avg-form {
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.avg-input {
+    background-color: white;
+    margin: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: black;
+}
+
+.avg-input::placeholder {
+    color: #333;
+}
+
+.avg-button {
+    background-color: black;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.avg-button:hover {
+    background-color: #333;
+}

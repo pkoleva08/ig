@@ -28,16 +28,16 @@ function Avg() {
         const parsedTest2 = Number(formValues.test2);
 
         if (!trimmedName) {
-            setError("Please enter a student name.");
+            setError("Моля въведете име на ученика.");
             return;
         }
 
         if (!Number.isFinite(parsedTest1) || !Number.isFinite(parsedTest2)) {
-            setError("Test scores must be numeric values.");
+            setError("Оценките трябва да са числови стойности.");
             return;
         }
 
-        {/* Създаване на нов ученик обект- const: кон */}
+        {/* Създаване на нов ученик обект- const */}
         const newStudent = {
             id: Date.now(),
             name: trimmedName,
@@ -67,30 +67,30 @@ function Avg() {
             <h1>Средна стойност</h1>
             {/* формуляр за създаване на нов ученик и оценки */}
             <form className="avg-form" onSubmit={handleAddStudent}>
-                <input
+                <input className="avg-input"
                     name="name"
                     type="text"
                     placeholder="Име на ученика"
                     value={formValues.name}
                     onChange={handleChange}
                 />
-                <input
+                <input className="avg-input-score"
                     name="test1"
                     type="number"
-                    placeholder="Тест 1"
+                    placeholder="Въведете оценка за Тест 1"
                     value={formValues.test1}
                     onChange={handleChange}
                     step="0.01"
                 />
-                <input
+                <input className="avg-input-score"
                     name="test2"
                     type="number"
-                    placeholder="Тест 2"
+                    placeholder="Въведете оценка за Тест 2"
                     value={formValues.test2}
                     onChange={handleChange}
                     step="0.01"
                 />
-                <button type="submit">Добави ученик</button>
+                <button type="submit" className="avg-button">Добави ученик</button>
             </form>
 
             {error && <p className="avg-error">{error}</p>}
