@@ -7,31 +7,31 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './Calc.css';
 
 const Calc = () => {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const [inputValue, setInputValue] = useState('');
-  const [fromBase, setFromBase] = useState(10);
-  const [toBase, setToBase] = useState(2);
-  const [result, setResult] = useState('');
-  const [error, setError] = useState('');
-  const bases = [2, 8, 10, 16];
+  const { t } = useTranslation(); // Hook за превод на текстове
+  const navigate = useNavigate(); // Hook за навигация между страниците
+  const [inputValue, setInputValue] = useState(''); // Състояние за входното число
+  const [fromBase, setFromBase] = useState(10); // Състояние за избраната изходна бройна система
+  const [toBase, setToBase] = useState(2); // Състояние за избраната целева бройна система
+  const [result, setResult] = useState(''); // Състояние за резултата от преобразуването
+  const [error, setError] = useState(''); // Състояние за съобщения за грешки
+  const bases = [2, 8, 10, 16]; // Поддържани бройни системи
 
   const handleConvert = () => {
-    setError('');
-    setResult('');
+    setError(''); // изчистване на предишни грешки, като започва ново преобразуване с празен статус
+    setResult(''); // изчистване на предишния резултат, като започва ново преобразуване с празен резултат
     try {
-      if (!inputValue) {
+      if (!inputValue) { // Проверка за празен вход- !inputValue - ако няма въведено число
         setError('Моля, въведете число.');
         return;
       }
       // Проверка за валидност на входа
       const decimalValue = parseInt(inputValue, fromBase);
-      if (isNaN(decimalValue)) {
+      if (isNaN(decimalValue)) { // дали числото е валидно в избраната бройна система
         setError('Невалидно число за избраната бройна система.');
         return;
       }
-      const convertedValue = decimalValue.toString(toBase).toUpperCase();
-      setResult(convertedValue);
+      const convertedValue = decimalValue.toString(toBase).toUpperCase(); // Преобразуване на числото в целевата бройна система
+      setResult(convertedValue); // Задаване на резултата като взима стойността на преобразуваното число- convertedValue
     } catch (error) {
       setError('Грешка при преобразуването.');
     }
@@ -42,7 +42,7 @@ const Calc = () => {
       <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} sx={{ mb: 2 }}>
         {t('back', { defaultValue: 'Назад' })}
       </Button>
-      <Typography variant="h5" sx={{ mb: 2 }}>
+      <Typography variant="h5" sx={{ mb: 2 }} className='page-title'>
         Преобразуване на бройни системи
       </Typography>
       <TextField
@@ -90,7 +90,7 @@ const Calc = () => {
       )}
       {result && (
         <Box sx={{ display: 'flex', alignItems: 'center', mt: 2, gap: 2 }}>
-          <Typography variant="h6">
+          <Typography variant="h6" className='result-text'>
             Резултат: <b>{result}</b>
           </Typography>
           <Button

@@ -1,17 +1,17 @@
 //изброй командите в конзолоата
-//npm init -y
-//npm install express mysql2 bcrypt cors
-//npm install --save-dev nodemon
-//npx nodemon server.js
-//npm run dev
-//създай файл server.js в backend папката
+//npm init -y - инициализиране на нов Node.js проект с подразбиращи се настройки
+//npm install express mysql2 bcrypt cors - инсталиране на express, mysql2, bcrypt за хеширане на пароли и cors за разрешаване на заявки от друг домейн
+//npm install --save-dev nodemon - инсталиране на nodemon за автоматично рестартиране на сървъра при промени в кода
+//npx nodemon server.js - стартиране на сървъра с nodemon
+//npm run dev - ако е настроен в package.json за стартиране на сървъра с nodemon
+//създай файл server.js в backend папката и добави следния код:
 
-//backend/server.js
+//backend/server.js- оказание на пътя
 
-import express from "express";
-import mysql from "mysql2";
-import bcrypt from "bcrypt";
-import cors from "cors";
+import express from "express"; // Импортиране на Express фреймуърка
+import mysql from "mysql2"; // Импортиране на MySQL клиентa
+import bcrypt from "bcrypt"; // Импортиране на bcrypt за хеширане на пароли
+import cors from "cors"; // Импортиране на CORS middleware за разрешаване на заявки от друг домейн
 
 const app = express(); // Инициализация на Express приложението
 app.use(express.json()); // За да може да чете JSON тела в заявките
@@ -22,7 +22,7 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "demo"
+  database: "demo" //име на базата данни
 });
 
 // Регистрация на потребител
