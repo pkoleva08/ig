@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Calc from "./pages/Calc";
 import Avg from "./pages/Avg";
+import Gauss from "./pages/Gauss";
 
 const About = () => <h2>About Page</h2>;
 
@@ -59,8 +60,12 @@ const App = () => {
           <Route path="/Calc" element={<Navigate to="/calc" replace />} />
 
           {/* Avg – нова страница за среден резултат на студент */}
-          <Route path="/avg" element={<Avg />} />
+          <Route path="/avg" element={<Avg user={user} />} />
           <Route path="/Avg" element={<Navigate to="/avg" replace />} />
+
+          {/* Avg – нова страница за среден резултат на студент */}
+          <Route path="/gauss" element={<Gauss user={user} />} />
+          <Route path="/Gauss" element={<Navigate to="/gauss" replace />} />
 
           {/* Login/Register – поддържам и двете версии */}
           <Route path="/login" element={<Login setUser={setUser} />} />

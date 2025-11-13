@@ -1,28 +1,36 @@
 import React, { useState } from "react";
 import "./Login.css";
-import Header from "../components/Header";
-import { Link } from "react-router-dom";
 
-// логин сраницата
-<Header />
 const Login = ({ setUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    const res = await fetch("http://localhost:3001/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-    const data = await res.json();
-    if (res.ok) {
-      setUser(data.username);
-      setMsg("Успешен вход!");
-    } else {
-      setMsg(data.message);
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    setMsg("");
+    setSubmitting(true);
+
+    try {
+      const response = await fetch("http://localhost:3001/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setUser(data.user);
+        setMsg("Login successful.");
+      } else {
+        setMsg(data.message || "Login failed.");
+      }
+    } catch (error) {
+      setMsg("Unable to reach the server.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -32,18 +40,24 @@ const Login = ({ setUser }) => {
       <form onSubmit={handleLogin}>
         <input
           type="text"
-          placeholder="Потребителско име"
+          placeholder="Username"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(event) => setUsername(event.target.value)}
+          disabled={submitting}
+          autoComplete="username"
         />
         <input
           type="password"
-          placeholder="Парола"
+          placeholder="Password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(event) => setPassword(event.target.value)}
+          disabled={submitting}
+          autoComplete="current-password"
         />
-        <button type="submit">Вход</button>
-        <div>{msg}</div>
+        <button type="submit" disabled={submitting}>
+          {submitting ? "..." : "Log in"}
+        </button>
+        {msg && <div>{msg}</div>}
       </form>
     </div>
   );
