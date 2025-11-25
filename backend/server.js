@@ -5,7 +5,7 @@ import express from "express";
 import mysql from "mysql2";
 import bcrypt from "bcrypt";
 import cors from "cors";
-
+//npx -y nodemon server.js
 // Създаване на Express приложение  
 const app = express();
 
@@ -275,7 +275,7 @@ app.post("/avg-scores", async (req, res) => {
         INNER JOIN users u ON a.user_id = u.id
         WHERE a.id = ?`; // SQL заявка за избор на новия запис
 
-        // Изпълняваме заявката за избор на новия запис
+    // Изпълняваме заявката за избор на новия запис
     const [rows] = await dbAsync.query(selectQuery, [insertResult.insertId]);
 
     return res.status(201).json(rows[0]); // Връщаме новия запис като отговор

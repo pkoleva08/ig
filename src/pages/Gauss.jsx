@@ -1,10 +1,7 @@
 // Страница за представяне на матрица в горно-триъгълна форма (метод на Гаус)
 import React, { useState } from 'react';
-import { Box, TextField, Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import './Gauss.css';
 
 const Gauss = () => {
   const { t } = useTranslation();
@@ -105,7 +102,7 @@ const Gauss = () => {
           const temp = a[row];
           a[row] = a[pivotRow];
           a[pivotRow] = temp;
-          logSteps.push(`Разменяме R${row + 1} и R${pivotRow + 1}`);
+          logSteps.push(`Разменяме R${row + 1} и R${pivotRow + 1} `);
         }
 
         // елиминираме елементите под pivot-а
@@ -119,7 +116,7 @@ const Gauss = () => {
           }
 
           logSteps.push(
-            `R${i + 1} = R${i + 1} - (${factor.toFixed(3)}) · R${row + 1}`
+            `R${i + 1} = R${i + 1} - (${factor.toFixed(3)}) · R${row + 1} `
           );
         }
 
@@ -135,131 +132,137 @@ const Gauss = () => {
   };
 
   return (
-    <Box sx={{ p: 3, maxWidth: 900, mx: 'auto' }}>
-      <Button
-        startIcon={<ArrowBackIcon />}
+    <div className="max-w-5xl mx-auto p-6">
+      <button
         onClick={() => navigate(-1)}
-        sx={{ mb: 2 }}
+        className="mb-6 flex items-center text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
       >
-        {t('back', { defaultValue: 'Назад' })}
-      </Button>
+        <span className="mr-2">←</span> {t('back', { defaultValue: 'Назад' })}
+      </button>
 
-      <Typography variant="h5" sx={{ mb: 1 }} className="page-title">
+      <h1 className="text-3xl font-bold text-center mb-4 text-gray-800 dark:text-white">
         Гаусов метод – представяне в горно-триъгълна форма
-      </Typography>
-      <Typography variant="body2" className="gauss-description">
+      </h1>
+      <p className="text-center text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
         Въведете размерите и елементите на матрицата. Натиснете
-        &nbsp;
-        <b>„Преобразувай“</b>, за да получите горно-триъгълната матрица чрез
+        <span className="font-bold mx-1">„Преобразувай“</span>, за да получите горно-триъгълната матрица чрез
         метода на Гаус.
-      </Typography>
+      </p>
 
       {/* Контроли за размерите */}
-      <Box className="gauss-controls">
-        <TextField
-          label="Редове"
-          type="number"
-          value={rows}
-          onChange={(e) => handleResize(e.target.value, cols)}
-          size="small"
-          inputProps={{ min: 1, max: 10 }}
-        />
-        <TextField
-          label="Колони"
-          type="number"
-          value={cols}
-          onChange={(e) => handleResize(rows, e.target.value)}
-          size="small"
-          inputProps={{ min: 1, max: 10 }}
-        />
-        <Button variant="outlined" onClick={handleReset}>
+      <div className="flex flex-wrap gap-4 justify-center items-end mb-8 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-100 dark:border-gray-700">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Редове</label>
+          <input
+            type="number"
+            value={rows}
+            onChange={(e) => handleResize(e.target.value, cols)}
+            min="1"
+            max="10"
+            className="w-24 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-center"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Колони</label>
+          <input
+            type="number"
+            value={cols}
+            onChange={(e) => handleResize(rows, e.target.value)}
+            min="1"
+            max="10"
+            className="w-24 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-center"
+          />
+        </div>
+        <button
+          onClick={handleReset}
+          className="px-4 py-2 border border-red-500 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors font-medium h-[42px]"
+        >
           Нулирай матрицата
-        </Button>
-      </Box>
+        </button>
+      </div>
 
       {/* Входна матрица */}
-      <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
-        Входна матрица A
-      </Typography>
-      <div className="matrix-wrapper">
-        <div
-          className="matrix-grid"
-          style={{ '--cols': cols }}
-        >
-          {matrix.map((rowArr, rIndex) =>
-            rowArr.map((value, cIndex) => (
-              <TextField
-                key={`${rIndex}-${cIndex}`}
-                type="number"
-                size="small"
-                variant="outlined"
-                value={value}
-                onChange={(e) =>
-                  handleCellChange(rIndex, cIndex, e.target.value)
-                }
-                className="matrix-cell-input"
-                inputProps={{ step: 'any' }}
-              />
-            ))
-          )}
+      <div className="mb-8">
+        <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300 text-center">Входна матрица A</h3>
+        <div className="overflow-x-auto pb-4">
+          <div
+            className="grid gap-2 mx-auto w-fit p-4 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700"
+            style={{ gridTemplateColumns: `repeat(${cols}, minmax(80px, 1fr))` }}
+          >
+            {matrix.map((rowArr, rIndex) =>
+              rowArr.map((value, cIndex) => (
+                <input
+                  key={`${rIndex} -${cIndex} `}
+                  type="number"
+                  value={value}
+                  onChange={(e) => handleCellChange(rIndex, cIndex, e.target.value)}
+                  step="any"
+                  className="w-full p-2 text-center rounded border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white shadow-sm"
+                />
+              ))
+            )}
+          </div>
         </div>
       </div>
 
-      <Button
-        variant="contained"
-        fullWidth
-        sx={{ mt: 2 }}
+      <button
         onClick={handleGaussianElimination}
+        className="w-full max-w-md mx-auto block py-3 px-6 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5 mb-8"
       >
         Преобразувай (метод на Гаус)
-      </Button>
+      </button>
 
       {error && (
-        <Typography color="error" sx={{ mt: 2 }}>
+        <div className="p-4 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-lg text-center mb-8">
           {error}
-        </Typography>
+        </div>
       )}
 
-      {/* Резултатна матрица */}
-      {resultMatrix && (
-        <>
-          <Typography variant="subtitle1" sx={{ mt: 3, mb: 1 }}>
-            Горно-триъгълна матрица U
-          </Typography>
-          <div className="result-matrix-wrapper">
-            <table className="result-matrix-table">
-              <tbody>
-                {resultMatrix.map((rowArr, rIndex) => (
-                  <tr key={rIndex}>
-                    {rowArr.map((val, cIndex) => (
-                      <td key={cIndex}>
-                        {Number(val).toFixed(3)}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Резултатна матрица */}
+        {resultMatrix && (
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 h-fit">
+            <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300 border-b pb-2 border-gray-100 dark:border-gray-700">
+              Горно-триъгълна матрица U
+            </h3>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <tbody>
+                  {resultMatrix.map((rowArr, rIndex) => (
+                    <tr key={rIndex}>
+                      {rowArr.map((val, cIndex) => (
+                        <td
+                          key={cIndex}
+                          className="border border-gray-200 dark:border-gray-600 p-3 text-center font-mono text-gray-800 dark:text-gray-200 bg-gray-50 dark:bg-gray-700/30 min-w-[60px]"
+                        >
+                          {Number(val).toFixed(3)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </>
-      )}
+        )}
 
-      {/* Стъпки на елиминацията */}
-      {steps.length > 0 && (
-        <>
-          <Typography variant="subtitle1" sx={{ mt: 3, mb: 1 }}>
-            Стъпки на елиминацията
-          </Typography>
-          <div className="steps-box">
-            {steps.map((s, idx) => (
-              <div key={idx} className="step-item">
-                • {s}
-              </div>
-            ))}
+        {/* Стъпки на елиминацията */}
+        {steps.length > 0 && (
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 h-fit">
+            <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300 border-b pb-2 border-gray-100 dark:border-gray-700">
+              Стъпки на елиминацията
+            </h3>
+            <div className="bg-gray-50 dark:bg-gray-900/50 p-4 rounded-lg h-64 overflow-y-auto border border-gray-200 dark:border-gray-700 font-mono text-sm">
+              {steps.map((s, idx) => (
+                <div key={idx} className="mb-2 text-gray-700 dark:text-gray-300 pb-2 border-b border-gray-200 dark:border-gray-700/50 last:border-0 last:pb-0">
+                  • {s}
+                </div>
+              ))}
+            </div>
           </div>
-        </>
-      )}
-    </Box>
+        )}
+      </div>
+    </div>
   );
 };
 

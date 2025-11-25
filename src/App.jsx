@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
-import "./App.css";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Calc from "./pages/Calc";
 import Avg from "./pages/Avg";
 import Gauss from "./pages/Gauss";
-
-const About = () => <h2>About Page</h2>;
+import About from "./pages/About";
 
 function PathNormalizer() {
   const location = useLocation();
@@ -25,10 +23,14 @@ function PathNormalizer() {
 
 function NotFound() {
   return (
-    <section style={{ padding: 24 }}>
-      <h1>404</h1>
-      <p>Страницата не е намерена.</p>
-      <p><a href="/home">Към началната</a></p>
+    <section className="p-6 text-center">
+      <h1 className="text-6xl font-bold text-red-500 mb-4">404</h1>
+      <p className="text-xl mb-4">Страницата не е намерена.</p>
+      <p>
+        <a href="/home" className="text-blue-500 hover:underline">
+          Към началната
+        </a>
+      </p>
     </section>
   );
 }
@@ -37,9 +39,9 @@ const App = () => {
   const [user, setUser] = useState(null);
 
   return (
-    <>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
       <Header user={user} setUser={setUser} />
-      <main>
+      <main className="container mx-auto px-4 py-8">
         {/* Нормализира главни/малки букви в пътищата */}
         <PathNormalizer />
 
@@ -48,7 +50,7 @@ const App = () => {
           <Route path="/" element={<Navigate to="/home" replace />} />
 
           {/* Начална страница – поддържаме и /Home (редирект към /home) */}
-          <Route path="/home" element={<h1>Welcome to the App</h1>} />
+          <Route path="/home" element={<h1 className="text-4xl font-bold text-center mt-10">Welcome to the App</h1>} />
           <Route path="/Home" element={<Navigate to="/home" replace />} />
 
           {/* About – пазя компонента; ако не се ползва, може да остане за бъдеще */}
@@ -63,7 +65,7 @@ const App = () => {
           <Route path="/avg" element={<Avg user={user} />} />
           <Route path="/Avg" element={<Navigate to="/avg" replace />} />
 
-          {/* Avg – нова страница за среден резултат на студент */}
+          {/* Gauss – нова страница за Гаус */}
           <Route path="/gauss" element={<Gauss user={user} />} />
           <Route path="/Gauss" element={<Navigate to="/gauss" replace />} />
 
@@ -79,7 +81,7 @@ const App = () => {
           <Route path="*" element={<Navigate to="/404" replace />} />
         </Routes>
       </main>
-    </>
+    </div>
   );
 };
 
